@@ -1,0 +1,62 @@
+# GUI Apps
+alacritty 0.7.2-1
+chromium 90.0.4430.212-1
+code 1.56.2-2
+emacs 27.2-1
+evince 40.1-1
+rxvt-unicode 9.26-1
+
+# CLI Apps
+imagemagick 7.0.11.13-2
+flatpak 1.11.1-1
+vim 8.2.2859-1
+
+# Basic dependencies
+autoconf 2.71-1
+automake 1.16.3-1
+base 2-2
+binutils 2.36.1-3
+bison 3.7.6-1
+gcc 11.1.0-1
+git 2.31.1-1
+linux 5.12.5.arch1-1
+linux-firmware 20210511.7685cf4-1
+m4 1.4.18-3
+make 4.3-3
+patch 2.7.6-8
+pkgconf 1.7.3-1
+sudo 1.9.7-1
+which 2.21-5
+fakeroot 1.25.3-2
+flex 2.6.4-3
+groff 1.22.4-5
+
+# Wifi
+dhcpcd 9.4.0-1
+iw 5.9-1
+iwd 1.14-1
+wpa_supplicant 2:2.9-8
+
+# Compositor
+dmenu 5.0-1
+xorg-xwayland 21.1.1-1
+sway 1:1.6-1
+
+# Booting
+efibootmgr 17-2
+grub 2:2.04-10
+intel-ucode 20210216-1
+hfsprogs 540.1.linux3-4
+
+# TeXLive
+texinfo 6.7-3
+texlive-core 2020.57066-2
+texlive-langchinese 2020.57044-1
+texlive-langcyrillic 2020.56674-1
+texlive-langextra 2020.56781-1
+texlive-langgreek 2020.56956-1
+texlive-langjapanese 2020.57025-1
+texlive-langkorean 2020.56915-1
+
+# Arch User Repository
+yay 10.2.2-1
