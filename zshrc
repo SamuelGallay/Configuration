@@ -19,3 +19,14 @@ fpath+=$HOME/Configuration/pure
 autoload -U promptinit; promptinit
 prompt pure
 zstyle :prompt:pure:git:stash show yes
+
+# Colors
+LS_COLORS='no=00;37:fi=00:di=00;33:ln=04;36:pi=40;33:so=01;35:bd=40;33;01:'
+export LS_COLORS
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+alias ls='ls --color=auto'
+
+
+# Lang (completion related bug)
+export LANG=fr_FR.UTF-8
+export LC_CTYPE=fr_FR.UTF-8

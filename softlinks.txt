@@ -1,0 +1,4 @@
+ln -s ~/Configuration/sway  ~/.config/sway/config
+ln -s ~/Configuration/zshrc ~/.zshrc
+ln -s ~/Configuration/emacs ~/.emacs
+
