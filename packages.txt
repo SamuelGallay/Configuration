@@ -11,6 +11,8 @@ imagemagick 7.0.11.13-2
 flatpak 1.11.1-1
 vim 8.2.2859-1
 htop
+opam
+neofetch
 
 # Basic dependencies
 autoconf 2.71-1
@@ -39,6 +41,18 @@ iw 5.9-1
 iwd 1.14-1
 wpa_supplicant 2:2.9-8
 
+# Sound
+pavucontrol
+pulseaudio
+pulseaudio-alsa
+pulseaudio-bluetooth
+alsa-utils
+alsa-firmware
+
+# Bluetooth
+bluez
+bluez-utils
+
 # Compositor
 dmenu 5.0-1
 xorg-xwayland 21.1.1-1
@@ -48,7 +62,7 @@ sway 1:1.6-1
 efibootmgr 17-2
 grub 2:2.04-10
 intel-ucode 20210216-1
-hfsprogs 540.1.linux3-4
+hfsprogs # FROM AUR
 
 # TeXLive
 texinfo 6.7-3
@@ -62,3 +76,7 @@ texlive-langkorean 2020.56915-1
 
 # Arch User Repository
 yay 10.2.2-1
+hfsprogs
+greetd
+wlgreet 
+spotify # Requires cargo

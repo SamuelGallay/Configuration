@@ -30,3 +30,6 @@ alias ls='ls --color=auto'
 # Lang (completion related bug)
 export LANG=fr_FR.UTF-8
 export LC_CTYPE=fr_FR.UTF-8
+
+# opam configuration
+test -r /home/samuel/.opam/opam-init/init.zsh && . /home/samuel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
