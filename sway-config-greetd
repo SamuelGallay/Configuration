@@ -10,4 +10,8 @@ bindsym Mod4+shift+e exec swaynag \
 	-b 'Poweroff' 'systemctl poweroff' \
 	-b 'Reboot' 'systemctl reboot'
 
+# Brightness
+bindsym 0x1008ff03 exec light -U 5
+bindsym 0x1008ff02 exec light -A 5
+
 include /etc/sway/config.d/*

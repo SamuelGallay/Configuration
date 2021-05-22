@@ -11,8 +11,18 @@ bluetooth.service
 # Bluetooth
 bluetoothctl, need to trust device
 
+# Set this in /etc/bluetooth/main.conf
+[Policy]
+AutoEnable=true
+[General]
+DiscoverableTimeout = 0
+
 # Wifi
 iwctl
+
+# Brightness permissions
+sudo usermod -a -G video samuel
+sudo usermod -a -G video greeter
 
 # Git
 git config --global user.email "samuel.gallay@gmail.com"

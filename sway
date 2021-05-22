@@ -47,7 +47,7 @@ bindsym $mod+d exec $menu
 bindsym $mod+p exec LANG=fr chromium
 
 # Emacs
-bindsym $mod+o exec emacs
+bindsym $mod+o exec alacritty -e emacs -nw
 
 # Code
 bindsym $mod+i exec code
@@ -55,6 +55,13 @@ bindsym $mod+i exec code
 # Spotify 
 bindsym $mod+m exec LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify
 
+# Volume
+bindsym 0x1008ff11 exec amixer -D pulse sset Master 5%-
+bindsym 0x1008ff13 exec amixer -D pulse sset Master 5%+
+
+# Brightness
+bindsym 0x1008ff03 exec light -U 5
+bindsym 0x1008ff02 exec light -A 5
 
 floating_modifier $mod normal
 
