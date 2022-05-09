@@ -205,7 +205,7 @@ bar {
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
 
-    status_command i3status -c ~/.config/i3status.conf
+    status_command i3status -c ~/.config/other_dotfiles/i3status.conf
 
 
     colors {
