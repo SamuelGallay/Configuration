@@ -7,7 +7,9 @@ set $mod Mod4
 set $term alacritty
 
 # Your preferred application launcher
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# set $menu dmenu_path | dmenu | xargs swaymsg exec --
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+set $menu exec $term --class=launcher -e sway-launcher-desktop
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/Images/wallpaper.jpg fill
@@ -30,7 +32,10 @@ input '1:1:AT_Translated_Set_2_keyboard' {
   xkb_options caps:swapescape
 }
 
-input "1739:52861:SYNA32B3:01_06CB:CE7D_Touchpad" natural_scroll enable
+input "1739:52861:SYNA32B3:01_06CB:CE7D_Touchpad" {
+  natural_scroll enable
+  dwt disable
+}
  
 # Start a terminal
 bindsym $mod+Return exec $term
@@ -41,11 +46,11 @@ bindsym $mod+Shift+q kill
 # Start your launcher
 bindsym $mod+d exec $menu
 
-# Chromium
-bindsym $mod+p exec LANG=fr chromium
+# Firefox 
+bindsym $mod+p exec LANG=fr firefox
 
-# Emacs
-bindsym $mod+o exec alacritty -e emacs -nw
+# NeoVim
+bindsym $mod+o exec alacritty -e nvim
 
 # Code
 bindsym $mod+i exec code
@@ -54,8 +59,8 @@ bindsym $mod+i exec code
 bindsym $mod+m exec env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U 
 
 # Volume
-bindsym 0x1008ff11 exec amixer -D pulse sset Master 5%-
-bindsym 0x1008ff13 exec amixer -D pulse sset Master 5%+
+bindsym 0x1008ff11 exec pamixer -d 5
+bindsym 0x1008ff13 exec pamixer -i 5
 
 # Brightness
 bindsym 0x1008ff03 exec light -U 5

@@ -4,4 +4,4 @@ ln -s ~/Configuration/emacs ~/.emacs
 chmod 666 greetd sway-config-greetd
 ln -s ~/Configuration/greetd /etc/greetd/config.toml
 cp -f ~/Configuration/sway-config-greetd /etc/greetd/sway-config-greetd
-ln -s ~/Configuration/alacritty ~/.config/alacritty/alacritty.yml
+ln -s ~/Configuration/alacritty.yml ~/.config/alacritty/alacritty.yml
