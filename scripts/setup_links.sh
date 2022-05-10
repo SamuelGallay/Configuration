@@ -21,3 +21,6 @@ sudo systemctl enable dhcpcd bluetooth iwd greetd
 echo "Linking greetd"
 sudo mkdir -p /etc/greetd
 sudo ln -i ~/.config/other_dotfiles/greetd/* /etc/greetd/
+
+echo "Bluetooth..."
+sudo ln -i ~/.config/other_dotfiles/bluetooth/main.conf /etc/bluetooth/main.conf 

@@ -88,6 +88,7 @@ export BROWSER=/usr/bin/firefox
 #   export EDITOR='mvim'
 # fi
 export EDITOR='nvim'
+export SYSTEMD_EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

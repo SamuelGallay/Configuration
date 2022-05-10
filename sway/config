@@ -194,26 +194,10 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
+
 # Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position bottom
+bar swaybar_command waybar
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-
-    status_command i3status -c ~/.config/other_dotfiles/i3status.conf
-
-
-    colors {
-        statusline #ffffff
-        background #323232bb
-        inactive_workspace #323232bb #323232bb #ffffff
-    }
-}
 
 default_border none
 
