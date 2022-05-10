@@ -2,13 +2,13 @@
 
 echo "Welcome to my installation script !"
 
-essentialPackages=("base" "base-devel" "linux" "linux-firmware" "vi" "neovim" "efibootmgr" "dhcpcd" "iwd" "zsh" "sudo" "git" "lazygit" "openssh" "man" "curl")
+essentialPackages=("base" "base-devel" "linux" "linux-firmware" "vi" "neovim" "efibootmgr" "dhcpcd" "iwd" "zsh" "sudo" "git" "lazygit" "openssh" "man" "curl" "htop")
 
-desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavucontrol" "pamixer" "light" "seahorse" "xorg-xwayland" "bluez" "bluez-utils" "blueman")
+desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavucontrol" "pamixer" "light" "seahorse" "xorg-xwayland" "bluez" "bluez-utils" "blueman" "ttf-nerd-fonts-symbols" "emacs")
 
-mostPackages=("retroarch" "thunderbird" "deluge" "opam" "")
+mostPackages=("retroarch" "thunderbird" "deluge" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber")
 
-mostAURPackages=("sway-launcher-desktop" "rambox" "spotify-adblock-git" "bitwarden")
+mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet")
 
 concatenate() {
   local -n arr=$1
