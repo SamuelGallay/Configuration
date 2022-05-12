@@ -4,7 +4,7 @@ echo "Welcome to my installation script !"
 
 essentialPackages=("base" "base-devel" "linux" "linux-firmware" "vi" "neovim" "efibootmgr" "dhcpcd" "iwd" "zsh" "sudo" "git" "lazygit" "openssh" "man" "curl" "htop")
 
-desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavucontrol" "pamixer" "light" "seahorse" "xorg-xwayland" "bluez" "bluez-utils" "blueman" "ttf-nerd-fonts-symbols" "emacs" "otf-font-awesome" "waybar")
+desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavucontrol" "pamixer" "light" "seahorse" "xorg-xwayland" "bluez" "bluez-utils" "blueman" "ttf-nerd-fonts-symbols" "emacs" "otf-font-awesome" "waybar" "wl-clipboard")
 
 mostPackages=("retroarch" "thunderbird" "deluge-gtk" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber" "steam" "discord" "dunst" "qt5-wayland" "xdg-desktop-portal" "vlc")
 

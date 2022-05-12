@@ -2,6 +2,7 @@
 x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop
 message/rfc822=userapp-Thunderbird-HNSTL1.desktop
 x-scheme-handler/mid=userapp-Thunderbird-HNSTL1.desktop
+x-scheme-handler/etcher=balena-etcher-electron.desktop
 
 [Added Associations]
 x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop;
