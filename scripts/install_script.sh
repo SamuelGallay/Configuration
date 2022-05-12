@@ -6,9 +6,9 @@ essentialPackages=("base" "base-devel" "linux" "linux-firmware" "vi" "neovim" "e
 
 desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavucontrol" "pamixer" "light" "seahorse" "xorg-xwayland" "bluez" "bluez-utils" "blueman" "ttf-nerd-fonts-symbols" "emacs" "otf-font-awesome" "waybar")
 
-mostPackages=("retroarch" "thunderbird" "deluge-gtk" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber" "steam" "discord" "dunst")
+mostPackages=("retroarch" "thunderbird" "deluge-gtk" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber" "steam" "discord" "dunst" "qt5-wayland" "xdg-desktop-portal" "vlc")
 
-mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet")
+mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet" "alacritty-themes")
 
 concatenate() {
   local -n arr=$1

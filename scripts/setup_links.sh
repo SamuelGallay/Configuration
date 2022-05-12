@@ -9,7 +9,7 @@ ln -si ~/.config/other_dotfiles/.emacs ~/.emacs
 read -p "Creating greeter user ? [y/N]" yesno
 if [ "$yesno" = "y" ]
 then
-  sudo useradd -G video greeter 
+  sudo useradd greeter 
 fi
 
 echo "Add samuel to video..."
@@ -24,3 +24,6 @@ sudo ln -i ~/.config/other_dotfiles/greetd/* /etc/greetd/
 
 echo "Bluetooth..."
 sudo ln -i ~/.config/other_dotfiles/bluetooth/main.conf /etc/bluetooth/main.conf 
+
+# To fix iwd at startup ; 
+# https://wiki.archlinux.org/title/Iwd#Restarting_iwd.service_after_boot
