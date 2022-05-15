@@ -3,8 +3,10 @@ x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop
 message/rfc822=userapp-Thunderbird-HNSTL1.desktop
 x-scheme-handler/mid=userapp-Thunderbird-HNSTL1.desktop
 x-scheme-handler/etcher=balena-etcher-electron.desktop
+application/pdf=org.gnome.Evince.desktop
 
 [Added Associations]
 x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-HNSTL1.desktop;
 audio/x-mpegurl=nvim.desktop;
+application/pdf=evince.desktop;org.gnome.Evince.desktop;
