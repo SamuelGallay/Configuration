@@ -4,12 +4,12 @@
 set $mod Mod4
 
 # Your preferred terminal emulator
-set $term alacritty
+set $term foot 
 
 # Your preferred application launcher
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-set $menu exec $term --class=launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
+set $menu exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/Images/wallpaper.jpg fill
@@ -50,7 +50,7 @@ bindsym $mod+d exec $menu
 bindsym $mod+p exec LANG=fr firefox
 
 # NeoVim
-bindsym $mod+o exec alacritty -e nvim
+bindsym $mod+o exec $term -e nvim
 
 # Code
 bindsym $mod+i exec code
@@ -198,9 +198,10 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 bar swaybar_command waybar
 
-
 default_border none
 
 gaps inner 8
+
+exec udiskie -t
 
 include /etc/sway/config.d/*
