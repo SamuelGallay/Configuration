@@ -19,8 +19,6 @@ packer.startup(function(use)
   use 'hrsh7th/nvim-cmp' -- For Completion
 
   -- Snippets
-  --use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  --use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'SirVer/ultisnips'
   use 'quangnguyen30192/cmp-nvim-ultisnips'
 
@@ -40,7 +38,7 @@ end)
 --------- Key Bindings ----------
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
-local opt = { noremap = true, silent = false}
+local opt = { noremap = true, silent = false }
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -82,20 +80,21 @@ vim.o.smartindent = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 
--- Snippets
-local luasnip = require 'luasnip'
-
 -- VimTex
 vim.cmd [[let g:vimtex_view_method = 'zathura']]
 
 ---------- Completion ----------
 local cmp = require('cmp')
 local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
+    ['§'] = cmp.mapping(function(fallback)
+      cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+    end, { 'i', 's' }),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -103,17 +102,13 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-        --elseif luasnip.expand_or_jumpable() then
-        --  luasnip.expand_or_jump()
       else
-        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+        fallback()
       end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
       else
         fallback()
       end
