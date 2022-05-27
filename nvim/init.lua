@@ -19,8 +19,10 @@ packer.startup(function(use)
   use 'hrsh7th/nvim-cmp' -- For Completion
 
   -- Snippets
-  use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  --use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
+  --use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  use 'SirVer/ultisnips'
+  use 'quangnguyen30192/cmp-nvim-ultisnips'
 
   -- File explorer
   use 'ms-jpq/chadtree'
@@ -38,6 +40,7 @@ end)
 --------- Key Bindings ----------
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
+local opt = { noremap = true, silent = false}
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -56,7 +59,8 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
-keymap('n', '<leader>r', ':luafile ~/.config/nvim/init.lua<CR>', opts)
+keymap('n', '<leader>rc', ':luafile ~/.config/nvim/init.lua<CR>', opt)
+keymap('n', '<leader>rs', ':call UltiSnips#RefreshSnippets()<CR>', opt)
 keymap('n', '<leader>q', ':q<CR>', opts)
 keymap('n', '<leader>w', ':w<CR>', opts)
 keymap('n', '<leader>t', ':VimtexCompile<CR>', opts)
@@ -81,8 +85,12 @@ vim.o.shiftwidth = 2
 -- Snippets
 local luasnip = require 'luasnip'
 
+-- VimTex
+vim.cmd [[let g:vimtex_view_method = 'zathura']]
+
 ---------- Completion ----------
 local cmp = require('cmp')
+local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -95,10 +103,10 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+        --elseif luasnip.expand_or_jumpable() then
+        --  luasnip.expand_or_jump()
       else
-        fallback()
+        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
       end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
@@ -112,8 +120,8 @@ cmp.setup {
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources {
+    { name = 'ultisnips' },
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
     { name = 'omni', },
     { name = 'buffer' },
   },
@@ -121,9 +129,9 @@ cmp.setup {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
       -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
     end,
   },
 }
@@ -133,6 +141,7 @@ require 'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   highlight = {
     enable = true,
+    disable = { "latex" },
   },
 }
 

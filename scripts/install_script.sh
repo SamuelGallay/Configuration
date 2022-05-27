@@ -6,9 +6,9 @@ essentialPackages=("base" "base-devel" "linux" "linux-firmware" "vi" "neovim" "e
 
 desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavucontrol" "pamixer" "light" "seahorse" "xorg-xwayland" "bluez" "bluez-utils" "blueman" "ttf-nerd-fonts-symbols" "emacs" "otf-font-awesome" "waybar" "wl-clipboard" "nautilus" "xdg-user-dirs" "otf-font-awesome" "udiskie" "gnome-disk-utility")
 
-mostPackages=("retroarch" "thunderbird" "deluge-gtk" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber" "steam" "discord" "dunst" "qt5-wayland" "xdg-desktop-portal" "vlc" "wine" "wine-mono" "wine-gecko" "lib32-libpulse")
+mostPackages=("retroarch" "thunderbird" "deluge-gtk" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber" "steam" "discord" "dunst" "qt5-wayland" "xdg-desktop-portal" "vlc" "wine" "wine-mono" "wine-gecko" "lib32-libpulse" "sagemath" "sagemath-doc" "jupyter-notebook" "lua-language-server" "python-virtualenv" "fd" "python-pynvim" "zathura" "zathura-pdf-mupdf")
 
-mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet" "alacritty-themes")
+mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet" "alacritty-themes" "whatsapp-nativefier" "nvim-packer-git")
 
 concatenate() {
   local -n arr=$1
