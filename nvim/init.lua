@@ -66,9 +66,17 @@ keymap('n', '<leader>ps', ':PackerSync<CR>', opts)
 keymap('n', '<leader>e', ':CHADopen<CR>', opts)
 keymap('n', '<leader>g', ':lua vim.lsp.buf.formatting()<CR>', opts)
 keymap('n', '<leader>f', ':Telescope find_files<CR>', opts)
+keymap('n', '<leader>s', ':set spell!<CR>', opt)
 
 vim.cmd [[set mouse=a]]
 vim.cmd [[set clipboard+=unnamedplus]]
+
+vim.cmd [[set spellsuggest=best,9]]
+vim.cmd [[set spelllang=en,fr]]
+
+-- Sanitize Insane Clipboard Defaults
+vim.cmd [[ xnoremap <expr> p 'pgv"'.v:register.'y`>'
+           xnoremap <expr> P 'Pgv"'.v:register.'y`>']]
 
 --------- Themes ----------
 vim.g.tokyonight_style = "night"

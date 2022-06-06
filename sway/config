@@ -204,4 +204,6 @@ gaps inner 8
 
 exec udiskie -t
 
+exec gnome-keyring-daemon --start
+
 include /etc/sway/config.d/*

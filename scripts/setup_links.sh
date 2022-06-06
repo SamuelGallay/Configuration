@@ -25,6 +25,9 @@ sudo ln -i ~/.config/other_dotfiles/greetd/* /etc/greetd/
 echo "Bluetooth..."
 sudo ln -i ~/.config/other_dotfiles/bluetooth/main.conf /etc/bluetooth/main.conf 
 
+echo "PAM greetd"
+sudo ln -i ~/.config/other_dotfiles/pam-greetd  /etc/pam.d/greetd
+
 echo "To configure eduroam, manually copy the file to /var/lib/iwd/eduroam.8021x and edit the password."
 
 # To fix iwd at startup ; 

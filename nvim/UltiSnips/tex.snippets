@@ -130,31 +130,6 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
-snippet / "Fraction" i
-\\frac{${VISUAL}}{$1}$0
-endsnippet
-
-context "math()"
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
-
-priority 1000
-context "math()"
-snippet '^.*\)/' "() frac" wrA
-`!p
-stripped = match.string[:-1]
-depth = 0
-i = len(stripped) - 1
-while True:
-	if stripped[i] == ')': depth += 1
-	if stripped[i] == '(': depth -= 1
-	if depth == 0: break;
-	i-=1
-snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
-`{$1}$0
-endsnippet
-
 context "math()"
 snippet '([A-Za-z])(\d)' "auto subscript" wrA
 `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
@@ -221,11 +196,6 @@ endsnippet
 
 snippet bmat "bmat" iA
 \begin{bmatrix} $1 \end{bmatrix} $0
-endsnippet
-
-context "math()"
-snippet () "left( right)" iA
-\left( ${1:${VISUAL}} \right) $0
 endsnippet
 
 snippet lr "left( right)" i
@@ -611,6 +581,12 @@ priority 100
 context "math()"
 snippet "([a-zA-Z])bar" "bar" riA
 \overline{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority 10
+context "math()"
+snippet "wdh" "widehat" riA
+\widehat{$1}$0
 endsnippet
 
 priority 10
