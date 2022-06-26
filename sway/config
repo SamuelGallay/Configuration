@@ -58,6 +58,8 @@ bindsym $mod+i exec code
 # Spotify 
 bindsym $mod+m exec env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U 
 
+bindsym $mod+n exec blueman-manager
+
 # Volume (package pamixer)
 bindsym 0x1008ff11 exec pamixer -d 5
 bindsym 0x1008ff13 exec pamixer -i 5
@@ -67,6 +69,9 @@ bindsym 0x1008ff03 exec light -U 5
 bindsym 0x1008ff02 exec light -A 5
 
 floating_modifier $mod normal
+
+# Screenshot
+bindsym $mod+Shift+s exec grim -g "$(slurp)" screenshot.png
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -203,7 +208,5 @@ default_border none
 gaps inner 8
 
 exec udiskie -t
-
-#exec gnome-keyring-daemon --start --unlock
 
 include /etc/sway/config.d/*

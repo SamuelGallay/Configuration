@@ -119,5 +119,7 @@ alias m="neomutt"
 
 alias n="nvim"
 
+alias open="xdg-open"
+
 alias pluto="LD_LIBRARY_PATH=\"/usr/lib/julia:$LD_LIBRARY_PATH\" julia -e \"using Pluto; Pluto.run()\""
 
