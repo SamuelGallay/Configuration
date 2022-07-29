@@ -10,3 +10,6 @@ x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-HNSTL1.desktop;
 audio/x-mpegurl=nvim.desktop;
 application/pdf=evince.desktop;org.gnome.Evince.desktop;
+text/plain=nvim.desktop;
+application/zip=org.gnome.Nautilus.desktop;
+image/tiff=gimp.desktop;

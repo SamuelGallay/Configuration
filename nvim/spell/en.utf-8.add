@@ -19,7 +19,6 @@ Hasse
 Cauchy-Schwarz
 réapplique
 trigonalisable
-#igulière
 d'inséparabilité
 tikzexternalize
 cd
@@ -27,8 +26,6 @@ Hartstone
 èmes
 Diffie
 d'exponentiation
-#onsidére
-#onsidére
 supersingular
 isogenies
 SIDH
@@ -37,9 +34,14 @@ racines-coefficients
 CDH
 DLP
 sous-exponentiel
-d'Eulclide
 sous-partie
 Shimura-Taniyama-Weil
 passe-t-il
 non-orienté
 Cayley-Hamilton
+hyperref
+log2
+SageMath
+Vélu
+tikzcd
+#eflection
