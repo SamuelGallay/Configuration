@@ -31,6 +31,9 @@ packer.startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
+  -- GitHub Copilot
+  use 'github/copilot.vim'
+
   -- Themes
   use 'folke/tokyonight.nvim'
 end)
@@ -77,6 +80,10 @@ vim.cmd [[set spelllang=en,fr]]
 -- Sanitize Insane Clipboard Defaults
 vim.cmd [[ xnoremap <expr> p 'pgv"'.v:register.'y`>'
            xnoremap <expr> P 'Pgv"'.v:register.'y`>']]
+
+-- Copilot
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 --------- Themes ----------
 vim.g.tokyonight_style = "night"
