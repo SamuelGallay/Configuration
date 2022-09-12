@@ -5,7 +5,7 @@ packer.startup(function(use)
   use 'lervag/vimtex'
 
   -- Syntax highlighting
-  use 'nvim-treesitter/nvim-treesitter'
+  --use 'nvim-treesitter/nvim-treesitter'
 
   -- Language Server Protocol
   use 'neovim/nvim-lspconfig'
@@ -32,7 +32,7 @@ packer.startup(function(use)
   }
 
   -- GitHub Copilot
-  use 'github/copilot.vim'
+  -- use 'github/copilot.vim'
 
   -- Themes
   use 'folke/tokyonight.nvim'
@@ -82,8 +82,8 @@ vim.cmd [[ xnoremap <expr> p 'pgv"'.v:register.'y`>'
            xnoremap <expr> P 'Pgv"'.v:register.'y`>']]
 
 -- Copilot
-vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+--vim.g.copilot_no_tab_map = true
+-- vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 --------- Themes ----------
 vim.g.tokyonight_style = "night"
@@ -147,13 +147,18 @@ cmp.setup {
 }
 
 ---------- TreeSitter ----------
-require 'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
-  highlight = {
-    enable = true,
-    disable = { "latex" },
-  },
-}
+--require 'nvim-treesitter.configs'.setup {
+--  ensure_installed = "all",
+--  highlight = {
+--    enable = false,
+--    disable = { "latex" },
+--  },
+--}
+
+
+-- Auto Indent
+vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+
 
 ---------- LSP ----------
 require 'lspconfig'.sumneko_lua.setup {
@@ -178,3 +183,9 @@ require 'lspconfig'.sumneko_lua.setup {
     },
   },
 }
+
+require 'lspconfig'.ocamllsp.setup {}
+require 'lspconfig'.clangd.setup {}
+
+keymap('n', '<leader>z', ':lua vim.lsp.buf.hover()<CR>', opts)
+vim.cmd [[autocmd CursorHold *.ml lua vim.lsp.buf.hover()<CR>]]

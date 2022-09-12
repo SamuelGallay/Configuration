@@ -1,5 +1,5 @@
 # `-l` activates layer-shell mode. Notice that `swaymsg exit` will run after gtkgreet.
-exec "gtkgreet -s /etc/greetd/gtkgreet.css -l; swaymsg exit"
+exec "gtkgreet -c gnome-session -s /etc/greetd/gtkgreet.css -l; swaymsg exit"
 
 bindsym Mod4+shift+e exec swaynag \
 -t warning \

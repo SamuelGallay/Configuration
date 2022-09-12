@@ -12,16 +12,17 @@ for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 p
 set $menu exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Images/wallpaper.jpg fill
+output eDP-1 bg ~/Images/wallpaper.jpg fill
+output HEADLESS-1 bg #34c0eb solid_color
+output HDMI-1 bg #7a1dc2 solid_color
 
 ### Idle configuration
 #
 # Example configuration:
 #
- exec swayidle -w \
-          timeout 300 'swaylock -f -c 000000' \
-          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w timeout 300 'swaylock -f -c 000000'
+exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+exec swayidle -w before-sleep 'swaylock -f -c 000000'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -35,6 +36,10 @@ input '1:1:AT_Translated_Set_2_keyboard' {
 input "1739:52861:SYNA32B3:01_06CB:CE7D_Touchpad" {
   natural_scroll enable
   dwt disable
+}
+
+input "1267:11525:ELAN2514:00_04F3:2D05" {
+  map_to_output "eDP-1"
 }
 
 # Start a terminal
@@ -75,6 +80,13 @@ bindsym $mod+Shift+s exec grim -g "$(slurp)" screenshot.png
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
+
+# Enable / disable main screen for presentations
+# bindsym $mod+g exec swaymsg output eDP-1 disable
+# bindsym $mod+Shift+g exec swaymsg output eDP-1 enable
+bindsym $mod+g exec wl-mirror HEADLESS-1
+bindsym $mod+Shift+g exec wl-mirror HDMI-1
+# bindsym $mod+g exec /home/samuel/.config/scripts/wl-present.sh mirror
 
 # Exit sway (logs you out of your Wayland session)
 #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -206,6 +218,19 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+
+exec swaymsg create_output
+
+workspace 1 output eDP-1
+workspace 2 output eDP-1
+workspace 3 output eDP-1
+workspace 4 output eDP-1
+workspace 5 output eDP-1
+workspace 6 output eDP-1
+workspace 7 output eDP-1
+workspace 8 output eDP-1
+workspace 9 output eDP-1
+workspace 10 output HEADLESS-1
 
 # Status Bar:
 bar swaybar_command waybar
