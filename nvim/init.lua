@@ -97,6 +97,7 @@ vim.o.shiftwidth = 2
 
 -- VimTex
 vim.cmd [[let g:vimtex_view_method = 'zathura']]
+vim.cmd [[let g:vimtex_quickfix_ignore_filters = ['Underfull','Overfull',] ]]
 
 ---------- Completion ----------
 local cmp = require('cmp')
