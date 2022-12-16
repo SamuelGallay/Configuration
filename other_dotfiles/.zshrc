@@ -90,6 +90,11 @@ export BROWSER=/usr/bin/firefox
 export EDITOR='nvim'
 export SYSTEMD_EDITOR='nvim'
 
+export DEVKITPRO=/opt/devkitpro
+export DEVKITARM=/opt/devkitpro/devkitARM
+export DEVKITPPC=/opt/devkitpro/devkitPPC
+
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 

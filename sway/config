@@ -12,23 +12,16 @@ for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 p
 set $menu exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+exec swaymsg create_output
 output eDP-1 bg ~/Images/wallpaper.jpg fill
-output HEADLESS-1 bg #34c0eb solid_color
-output HDMI-1 bg #7a1dc2 solid_color
+output HEADLESS-1 bg #7a1dc2 solid_color
+output HDMI-1 bg #34c0eb solid_color
 
-### Idle configuration
-#
-# Example configuration:
-#
-exec swayidle -w timeout 300 'swaylock -f -c 000000'
-exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
-exec swayidle -w before-sleep 'swaylock -f -c 000000'
+output eDP-1 pos 1920 0
+output HEADLESS-1 pos 0 0
+output HDMI-1 pos 3840 0
 
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-
-input '1:1:AT_Translated_Set_2_keyboard' {
+input "1:1:AT_Translated_Set_2_keyboard" {
   xkb_layout "ch(fr)"
   xkb_options caps:swapescape
 }
@@ -63,6 +56,7 @@ bindsym $mod+i exec code
 # Spotify 
 bindsym $mod+m exec env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U 
 
+# Bluetooth
 bindsym $mod+n exec blueman-manager
 
 # Volume (package pamixer)
@@ -81,15 +75,9 @@ bindsym $mod+Shift+s exec grim -g "$(slurp)" screenshot.png
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 
-# Enable / disable main screen for presentations
-# bindsym $mod+g exec swaymsg output eDP-1 disable
-# bindsym $mod+Shift+g exec swaymsg output eDP-1 enable
 bindsym $mod+g exec wl-mirror HEADLESS-1
 bindsym $mod+Shift+g exec wl-mirror HDMI-1
-# bindsym $mod+g exec /home/samuel/.config/scripts/wl-present.sh mirror
 
-# Exit sway (logs you out of your Wayland session)
-#bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 bindsym $mod+Shift+e exec swaynag \
 -t warning \
@@ -101,7 +89,6 @@ bindsym $mod+Shift+e exec swaynag \
 #
 # Moving around:
 #
-
     set $left h
     set $down j
     set $up k
@@ -140,8 +127,8 @@ bindsym $mod+Shift+e exec swaynag \
    bindsym $mod+6 workspace number 6
    bindsym $mod+7 workspace number 7
    bindsym $mod+8 workspace number 8
-   bindsym $mod+9 workspace number 9
-   bindsym $mod+0 workspace number 10
+   bindsym $mod+9 workspace HDMI
+   bindsym $mod+0 workspace HEADLESS
     
 # Move focused container to workspace
   bindsym $mod+Shift+1 move container to workspace number 1
@@ -152,10 +139,8 @@ bindsym $mod+Shift+e exec swaynag \
   bindsym $mod+Shift+6 move container to workspace number 6
   bindsym $mod+Shift+7 move container to workspace number 7
   bindsym $mod+Shift+8 move container to workspace number 8
-  bindsym $mod+Shift+9 move container to workspace number 9
-  bindsym $mod+Shift+0 move container to workspace number 10
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+  bindsym $mod+Shift+9 move container to workspace HDMI
+  bindsym $mod+Shift+0 move container to workspace HEADLESS
 #
 # Layout stuff:
 #
@@ -181,18 +166,7 @@ bindsym $mod+Shift+e exec swaynag \
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
-#
-# Scratchpad:
-#
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
 
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
-
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
 #
 # Resizing containers:
 #
@@ -219,7 +193,6 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-exec swaymsg create_output
 
 workspace 1 output eDP-1
 workspace 2 output eDP-1
@@ -229,8 +202,8 @@ workspace 5 output eDP-1
 workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
-workspace 9 output eDP-1
-workspace 10 output HEADLESS-1
+workspace HDMI output HDMI-1
+workspace HEADLESS output HEADLESS-1
 
 # Status Bar:
 bar swaybar_command waybar
