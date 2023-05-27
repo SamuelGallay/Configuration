@@ -94,7 +94,7 @@ export DEVKITPRO=/opt/devkitpro
 export DEVKITARM=/opt/devkitpro/devkitARM
 export DEVKITPPC=/opt/devkitpro/devkitPPC
 
-
+export MAKEFLAGS='-j6'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 

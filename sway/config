@@ -13,13 +13,19 @@ set $menu exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launche
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 exec swaymsg create_output
-output eDP-1 bg ~/Images/wallpaper.jpg fill
+output eDP-1 bg ~/Images/raytracing.png fill
 output HEADLESS-1 bg #7a1dc2 solid_color
 output HDMI-1 bg #34c0eb solid_color
 
-output eDP-1 pos 1920 0
-output HEADLESS-1 pos 0 0
-output HDMI-1 pos 3840 0
+output eDP-1 pos 0 0
+#output HEADLESS-1 pos -1920 0
+output HDMI-1 pos 1920 0
+exec_always xrandr --output XWAYLAND0 --primary
+
+#output eDP-1 pos 1920 0
+#output HEADLESS-1 pos 0 0
+#output HDMI-1 pos 3840 0
+
 
 input "1:1:AT_Translated_Set_2_keyboard" {
   xkb_layout "ch(fr)"
@@ -46,6 +52,7 @@ bindsym $mod+d exec $menu
 
 # Firefox 
 bindsym $mod+p exec LANG=fr firefox
+bindsym $mod+Shift+p exec LANG=fr firefox -P private
 
 # NeoVim
 bindsym $mod+o exec $term -e nvim
@@ -166,6 +173,16 @@ bindsym $mod+Shift+e exec swaynag \
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+
+# Allow switching between workspaces with left and right swipes
+bindgesture swipe:right workspace prev
+bindgesture swipe:left workspace next
+
+# Allow container movements by pinching them
+bindgesture pinch:inward+up move up
+bindgesture pinch:inward+down move down
+bindgesture pinch:inward+left move left
+bindgesture pinch:inward+right move right
 
 #
 # Resizing containers:

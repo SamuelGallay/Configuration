@@ -11,16 +11,17 @@ packer.startup(function(use)
   use 'neovim/nvim-lspconfig'
 
   -- Completion
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/cmp-omni' --For LaTeX completion
-  use 'hrsh7th/nvim-cmp' -- For Completion
+  --use 'hrsh7th/cmp-nvim-lsp'
+  --use 'hrsh7th/cmp-buffer'
+  --use 'hrsh7th/cmp-path'
+  --use 'hrsh7th/cmp-cmdline'
+  --use 'hrsh7th/cmp-omni' -- For LaTeX completion
+  --use 'hrsh7th/nvim-cmp' -- For Completion
 
   -- Snippets
-  use 'SirVer/ultisnips'
-  use 'quangnguyen30192/cmp-nvim-ultisnips'
+  -- use 'SirVer/ultisnips'
+  -- use 'quangnguyen30192/cmp-nvim-ultisnips'
+  use "L3MON4D3/LuaSnip"
 
   -- File explorer
   use 'ms-jpq/chadtree'
@@ -61,7 +62,7 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
 keymap('n', '<leader>rc', ':luafile ~/.config/nvim/init.lua<CR>', opt)
-keymap('n', '<leader>rs', ':call UltiSnips#RefreshSnippets()<CR>', opt)
+--keymap('n', '<leader>rs', ':call UltiSnips#RefreshSnippets()<CR>', opt)
 keymap('n', '<leader>q', ':q<CR>', opts)
 keymap('n', '<leader>w', ':w<CR>', opts)
 keymap('n', '<leader>t', ':VimtexCompile<CR>', opts)
@@ -70,6 +71,7 @@ keymap('n', '<leader>e', ':CHADopen<CR>', opts)
 keymap('n', '<leader>g', ':lua vim.lsp.buf.formatting()<CR>', opts)
 keymap('n', '<leader>f', ':Telescope find_files<CR>', opts)
 keymap('n', '<leader>s', ':set spell!<CR>', opt)
+keymap('n', '<leader>z', ':lua vim.lsp.buf.hover()<CR>', opts)
 
 vim.cmd [[set mouse=a]]
 vim.cmd [[set clipboard+=unnamedplus]]
@@ -85,6 +87,7 @@ vim.cmd [[ xnoremap <expr> p 'pgv"'.v:register.'y`>'
 --vim.g.copilot_no_tab_map = true
 -- vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
+
 --------- Themes ----------
 vim.g.tokyonight_style = "night"
 vim.cmd [[colorscheme tokyonight]]
@@ -98,31 +101,57 @@ vim.o.shiftwidth = 2
 -- VimTex
 vim.cmd [[let g:vimtex_view_method = 'zathura']]
 vim.cmd [[let g:vimtex_quickfix_ignore_filters = ['Underfull','Overfull',] ]]
+vim.cmd [[
+let g:vimtex_delim_toggle_mod_list = [
+  \ ['\Bigl', '\Bigr'],
+  \]
+  ]]
+---------- LaTeX Snippets ----------
+vim.cmd [[
+" Expand or jump in insert mode
+imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>' 
+
+" Jump forward through tabstops in visual mode
+smap <silent><expr> <Tab> luasnip#jumpable(1) ? '<Plug>luasnip-jump-next' : '<Tab>'
+]]
+
+-- Somewhere in your Neovim startup, e.g. init.lua
+require("luasnip").config.set_config({ -- Setting LuaSnip config
+
+  -- Enable autotriggered snippets
+  enable_autosnippets = true,
+
+  -- Use Tab (or some other key if you prefer) to trigger visual selection
+  store_selection_keys = "<Tab>",
+})
+
+require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"})
 
 ---------- Completion ----------
+--[[
 local cmp = require('cmp')
 local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['§'] = cmp.mapping(function(fallback)
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['§'] = cmp.mapping(function(fallback)
       cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
     end, { 'i', 's' }),
-    ['<CR>'] = cmp.mapping.confirm {
+        ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
     end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else
@@ -131,10 +160,10 @@ cmp.setup {
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources {
-    { name = 'ultisnips' },
+    --{ name = 'ultisnips' },
     { name = 'nvim_lsp' },
-    { name = 'omni', },
-    { name = 'buffer' },
+    --{ name = 'omni', },
+    --{ name = 'buffer' },
   },
   snippet = {
     -- REQUIRED - you must specify a snippet engine
@@ -146,23 +175,27 @@ cmp.setup {
     end,
   },
 }
+]]
 
 ---------- TreeSitter ----------
---require 'nvim-treesitter.configs'.setup {
---  ensure_installed = "all",
---  highlight = {
---    enable = false,
---    disable = { "latex" },
---  },
---}
-
+--[[
+require 'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",
+  highlight = {
+    enable = false,
+    disable = { "latex" },
+  },
+}
+]]
 
 -- Auto Indent
-vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+--vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+vim.cmd [[autocmd BufWritePre *.ml lua vim.lsp.buf.format()]]
+--vim.cmd [[autocmd FileWritePre <buffer> lua vim.lsp.buf.format()]]
 
 
 ---------- LSP ----------
-require 'lspconfig'.sumneko_lua.setup {
+require'lspconfig'.lua_ls.setup {
   settings = {
     Lua = {
       runtime = {
@@ -171,7 +204,7 @@ require 'lspconfig'.sumneko_lua.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
+        globals = {'vim'},
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -184,9 +217,7 @@ require 'lspconfig'.sumneko_lua.setup {
     },
   },
 }
-
 require 'lspconfig'.ocamllsp.setup {}
 require 'lspconfig'.clangd.setup {}
+require 'lspconfig'.pyright.setup {}
 
-keymap('n', '<leader>z', ':lua vim.lsp.buf.hover()<CR>', opts)
-vim.cmd [[autocmd CursorHold *.ml lua vim.lsp.buf.hover()<CR>]]

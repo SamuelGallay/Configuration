@@ -61,3 +61,19 @@ dolphinrc
 kde.org
 session
 supertuxkart
+.luarc.json
+Google/
+Microsoft/
+Thunar/
+Unknown Organization/
+autostart/
+eog/
+evince/
+gtk-4.0/
+libreoffice/
+lutris/
+teams/
+xfce4/
+xournalpp/
+zoom.conf
+zoomus.conf
