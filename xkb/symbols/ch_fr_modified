@@ -1,0 +1,7 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+	include "ch(fr)"
+	name[Group1] = "French (CH, Modified by Samuel)";
+  key <AC10> { [ eacute, backslash, odiaeresis ] };
+};
+
