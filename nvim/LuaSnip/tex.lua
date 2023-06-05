@@ -13,11 +13,84 @@ local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
+<<<<<<< HEAD
+=======
+-- Magic code from https://github.com/nvim-treesitter/nvim-treesitter/issues/1184
+local has_treesitter, ts = pcall(require, 'vim.treesitter')
+local _, _ = pcall(require, 'vim.treesitter.query')
+
+local MATH_NODES = {
+    displayed_equation = true,
+    inline_formula = true,
+    math_environment = true,
+}
+
+local COMMENT = {
+    ['comment'] = true,
+    ['line_comment'] = true,
+    ['block_comment'] = true,
+    ['comment_environment'] = true,
+}
+
+local function get_node_at_cursor()
+    local buf = vim.api.nvim_get_current_buf()
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    row = row - 1
+    col = col - 1
+
+    local ok, parser = pcall(ts.get_parser, buf, 'latex')
+    if not ok or not parser then return end
+
+    local root_tree = parser:parse()[1]
+    local root = root_tree and root_tree:root()
+
+    if not root then
+        return
+    end
+
+    return root:named_descendant_for_range(row, col, row, col)
+end
+
+local function in_comment()
+    if has_treesitter then
+        local node = get_node_at_cursor()
+        while node do
+            if COMMENT[node:type()] then
+                return true
+            end
+            node = node:parent()
+        end
+        return false
+    end
+end
+
+local function in_mathzone()
+    if has_treesitter then
+        local node = get_node_at_cursor()
+        while node do
+            if node:type() == 'text_mode' then
+                return false
+            elseif MATH_NODES[node:type()] then
+                return true
+            end
+            node = node:parent()
+        end
+        return false
+    end
+end
+-- End of magic code
+
+--[[ Old version with VimTeX
+>>>>>>> 68f0b94 (LuaSnip, etc.)
 local in_mathzone = function()
   -- The `in_mathzone` function requires the VimTeX plugin
   return vim.fn['vimtex#syntax#in_mathzone']() == 1
 end
+<<<<<<< HEAD
 
+=======
+]]
+>>>>>>> 68f0b94 (LuaSnip, etc.)
 
 local simple_table = {
   ["al"] = "alpha",
@@ -41,6 +114,10 @@ local simple_table = {
   ["up"] = "upsilon",
   ["ph"] = "varphi",
   ["kh"] = "chi",
+<<<<<<< HEAD
+=======
+  ["ch"] = "chi",
+>>>>>>> 68f0b94 (LuaSnip, etc.)
   ["ps"] = "psi",
   ["om"] = "omega",
 
@@ -59,6 +136,13 @@ local simple_table = {
   ["PS"] = "Psi",
   ["OM"] = "Omega",
 
+<<<<<<< HEAD
+=======
+  ["EE"] = "E",
+  ["FF"] = "F",
+  ["AA"] = "A",
+
+>>>>>>> 68f0b94 (LuaSnip, etc.)
   ["sin"] = "sin",
   ["cos"] = "cos",
   ["tan"] = "tan",
@@ -74,6 +158,10 @@ local simple_table = {
   ["cd"] = "cdot",
   ["neq"] = "neq",
   ["nin"] = "notin",
+<<<<<<< HEAD
+=======
+  ["ni"] = "in",
+>>>>>>> 68f0b94 (LuaSnip, etc.)
 
   ["QQ"] = "Q",
   ["CC"] = "C",
@@ -88,6 +176,19 @@ local simple_table = {
   ["to"] = "to",
   ["mt"] = "mapsto",
   ["oo"] = "infty",
+<<<<<<< HEAD
+=======
+  ["wt"] = "widetilde",
+  ["ii"] = "1",
+  ["kn"] = ",|\\,",
+  ["qd"] = "quad",
+  ["BB"] = "Big",
+  ["bb"] = "big",
+  ["bl"] = "bigl",
+  ["br"] = "bigr",
+  ["BL"] = "Bigl",
+  ["BR"] = "Bigr",
+>>>>>>> 68f0b94 (LuaSnip, etc.)
 
   ["df"] = "diff",
 }
@@ -143,6 +244,13 @@ s({trig = "sum", snippetType="autosnippet"},
 fmta("\\sum_{<>}^{<>} ",{i(1),i(2),}),
 {condition = in_mathzone}),
 
+<<<<<<< HEAD
+=======
+s({trig = "prod", snippetType="autosnippet"},
+fmta("\\prod_{<>}^{<>} ",{i(1),i(2),}),
+{condition = in_mathzone}),
+
+>>>>>>> 68f0b94 (LuaSnip, etc.)
 s({trig = "sq", snippetType="autosnippet"},
 fmta("\\sqrt{<>} ",{i(1),}),
 {condition = in_mathzone}),
@@ -151,6 +259,13 @@ s({trig = "ee", snippetType="autosnippet"},
 fmta("e^{<>} ",{i(1),}),
 {condition = in_mathzone}),
 
+<<<<<<< HEAD
+=======
+s({trig = "tt", snippetType="autosnippet"},
+fmta("\\text{<>} ",{i(1),}),
+{condition = in_mathzone}),
+
+>>>>>>> 68f0b94 (LuaSnip, etc.)
 s({trig = "min", snippetType="autosnippet"},
 fmta("\\min_{<>} ",{i(1),}),
 {condition = in_mathzone}),
