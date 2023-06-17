@@ -15,11 +15,14 @@ set $menu exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launche
 exec swaymsg create_output
 output eDP-1 bg ~/Images/raytracing.png fill
 output HEADLESS-1 bg #7a1dc2 solid_color
+output HEADLESS-1 disable
 output HDMI-1 bg #34c0eb solid_color
 
 output eDP-1 pos 0 0
-#output HEADLESS-1 pos -1920 0
+#output HEADLESS-1 pos 0 1080
+output HEADLESS-1 pos 1920 0
 output HDMI-1 pos 1920 0
+output DP-1 pos 1920 0
 exec_always xrandr --output XWAYLAND0 --primary
 
 #output eDP-1 pos 1920 0
@@ -83,7 +86,7 @@ bindsym $mod+Shift+s exec grim -g "$(slurp)" screenshot.png
 bindsym $mod+Shift+c reload
 
 bindsym $mod+g exec wl-mirror HEADLESS-1
-bindsym $mod+Shift+g exec wl-mirror HDMI-1
+bindsym $mod+Shift+g output HEADLESS-1 enable
 
 
 bindsym $mod+Shift+e exec swaynag \
@@ -134,8 +137,8 @@ bindsym $mod+Shift+e exec swaynag \
    bindsym $mod+6 workspace number 6
    bindsym $mod+7 workspace number 7
    bindsym $mod+8 workspace number 8
-   bindsym $mod+9 workspace HDMI
-   bindsym $mod+0 workspace HEADLESS
+   bindsym $mod+9 workspace number 9
+   bindsym $mod+0 workspace EXTERNAL
     
 # Move focused container to workspace
   bindsym $mod+Shift+1 move container to workspace number 1
@@ -146,8 +149,8 @@ bindsym $mod+Shift+e exec swaynag \
   bindsym $mod+Shift+6 move container to workspace number 6
   bindsym $mod+Shift+7 move container to workspace number 7
   bindsym $mod+Shift+8 move container to workspace number 8
-  bindsym $mod+Shift+9 move container to workspace HDMI
-  bindsym $mod+Shift+0 move container to workspace HEADLESS
+  bindsym $mod+Shift+9 move container to workspace number 9
+  bindsym $mod+Shift+0 move container to workspace EXTERNAL
 #
 # Layout stuff:
 #
@@ -219,8 +222,10 @@ workspace 5 output eDP-1
 workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
-workspace HDMI output HDMI-1
-workspace HEADLESS output HEADLESS-1
+workspace 9 output eDP-1
+workspace EXTERNAL output HDMI-1
+workspace EXTERNAL output DP-1
+workspace EXTERNAL output HEADLESS-1
 
 # Status Bar:
 bar swaybar_command waybar

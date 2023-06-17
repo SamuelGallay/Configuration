@@ -3,20 +3,31 @@ local packer = require('packer')
 packer.startup(function(use)
   -- LaTeX
   use 'lervag/vimtex'
+  use { 'andymass/vim-matchup',
+    setup = function()
+      vim.g.matchup_override_vimtex = 1
+      vim.g.matchup_matchparen_deferred = 1
+    end
+  }
 
   -- Syntax highlighting
   use 'nvim-treesitter/nvim-treesitter'
+  use 'danielo515/nvim-treesitter-reason'
+
+  -- ctags
+  use 'ludovicchabant/vim-gutentags'
 
   -- Language Server Protocol
   use 'neovim/nvim-lspconfig'
 
   -- Completion
   use 'hrsh7th/cmp-nvim-lsp'
-  --use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-buffer'
   --use 'hrsh7th/cmp-path'
   --use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-omni' -- For LaTeX completion
   use 'hrsh7th/nvim-cmp' -- For Completion
+  use { 'saadparwaiz1/cmp_luasnip' }
 
   -- Snippets
   use 'L3MON4D3/LuaSnip'
@@ -30,13 +41,13 @@ packer.startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
-   -- Misc
+  -- Misc
   use 'jghauser/mkdir.nvim'
   use({
     "kdheepak/lazygit.nvim",
     -- optional for floating window border decoration
     requires = {
-        "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
     },
   })
   use {
@@ -48,11 +59,6 @@ packer.startup(function(use)
 
   -- Themes
   use 'folke/tokyonight.nvim'
-  --use 'navarasu/onedark.nvim'
-  --use "EdenEast/nightfox.nvim"
-  --use "sainnhe/edge"
-  --use "mhartington/oceanic-next"
-  --use 'glepnir/zephyr-nvim'
 end)
 
 --------- Key Bindings ----------
@@ -84,7 +90,10 @@ keymap('n', '<leader>t', ':VimtexCompile<CR>', opts)
 keymap('n', '<leader>ps', ':PackerSync<CR>', opts)
 keymap('n', '<leader>e', ':CHADopen<CR>', opts)
 keymap('n', '<leader>fr', ':w<CR>:!latexindent -s -m -w %<CR>', opts)
+keymap('n', '<leader>rr', ':w<CR>:e<CR>', opts)
 keymap('n', '<leader>gg', ':LazyGit<CR>', opts)
+--keymap('n', '<leader>m', '<Plug>(vimtex-env-change-math)\\[<CR>', opts)
+keymap('n', '<leader>m', ':VimtexTocOpen<CR>', opts)
 --keymap('n', '<leader>f', ':Telescope find_files<CR>', opts)
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
@@ -93,6 +102,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 keymap('n', '<leader>s', ':set spell!<CR>', opt)
 keymap('n', '<leader>z', ':lua vim.lsp.buf.hover()<CR>', opts)
+vim.cmd [[inoremap <C-x><C-o> <Cmd>lua require('cmp').complete()<CR>]]
 
 vim.cmd [[set mouse=a]]
 vim.cmd [[set clipboard+=unnamedplus]]
@@ -105,93 +115,75 @@ vim.cmd [[ xnoremap <expr> p 'pgv"'.v:register.'y`>'
            xnoremap <expr> P 'Pgv"'.v:register.'y`>']]
 
 --------- Themes ----------
-vim.cmd[[if (has("termguicolors"))
+vim.cmd [[if (has("termguicolors"))
  set termguicolors
 endif]]
 require('tokyonight').load()
-require('lualine').setup{}
+require('lualine').setup {}
 
 -- Scrolling
-require('neoscroll').setup()
+--require('neoscroll').setup()
 
 -- Indent
 vim.o.expandtab = true
-vim.o.smartindent = false
-vim.o.autoindent = false
-vim.o.indentexpr = false
-vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 
-vim.cmd [[autocmd FileType plaintex,tex,context setlocal indentexpr=]]
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "tex",
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.smartindent = false
+    vim.opt_local.autoindent = false
+    vim.opt_local.indentexpr = ""
+  end
+})
+
 
 -- VimTex
-<<<<<<< HEAD
-vim.cmd [[let g:vimtex_view_method = 'zathura']]
-vim.cmd [[let g:vimtex_quickfix_ignore_filters = ['Underfull','Overfull',] ]]
-vim.cmd [[let g:vimtex_delim_toggle_mod_list = [ ['\Bigl', '\Bigr'], ] ]]
-vim.cmd [[let g:vimtex_indent_enabled   = 0]]
-=======
 vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_quickfix_ignore_filters = {'Underfull','Overfull',}
-vim.g.vimtex_delim_toggle_mod_list = { {'\\Bigl', '\\Bigr'}, }
+vim.g.vimtex_quickfix_ignore_filters = { 'Underfull', 'Overfull', 'Token not allowed' }
+vim.g.vimtex_delim_toggle_mod_list = { { '\\Bigl', '\\Bigr' }, }
 vim.g.vimtex_indent_enabled = 0
-vim.g.vimtex_syntax_enabled = 0
+vim.g.vimtex_syntax_enabled = 1
 vim.g.tex_indent_braces = 0
->>>>>>> 68f0b94 (LuaSnip, etc.)
+vim.g.tex_flavor = "latex"
+
 
 ---------- LaTeX Snippets ----------
-vim.cmd [[
-" Expand or jump in insert mode
-<<<<<<< HEAD
-imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<c-g>u<Plug>luasnip-expand-or-jump' : '<Tab>' 
-=======
-" imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<c-g>u<Plug>luasnip-expand-or-jump' : '<Tab>' 
-  imap <silent><expr> jk luasnip#expand_or_jumpable() ? '<c-g>u<Plug>luasnip-expand-or-jump' : '<Tab>' 
->>>>>>> 68f0b94 (LuaSnip, etc.)
+vim.cmd [[imap <silent><expr> jk luasnip#expand_or_locally_jumpable() ? '<c-g>u<Plug>luasnip-expand-or-jump' : '' ]]
 
-" Jump forward through tabstops in visual mode
-" smap <silent><expr> <Tab> luasnip#jumpable(1) ? '<Plug>luasnip-jump-next' : '<Tab>'
-]]
-
--- Somewhere in your Neovim startup, e.g. init.lua
-require("luasnip").config.set_config({ -- Setting LuaSnip config
-
-  -- Enable autotriggered snippets
+require("luasnip").config.set_config({
   enable_autosnippets = true,
-
   -- Use Tab (or some other key if you prefer) to trigger visual selection
-<<<<<<< HEAD
-  store_selection_keys = "<Tab>",
-=======
-  --store_selection_keys = "<Tab>",
->>>>>>> 68f0b94 (LuaSnip, etc.)
-
+  store_selection_keys = "",
   update_events = 'TextChanged,TextChangedI',
 })
 
-require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"})
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/LuaSnip/" })
 
 ---------- TreeSitter ----------
 require("nvim-treesitter.configs").setup {
-    ensure_installed = "all" ,
-    highlight = {
-            enable = true,
-    },
-    indent = {
-            enable = false,
-    },
+  ensure_installed = "all",
+  highlight = {
+    enable = true,
+    disable = { "latex" },
+  },
+  indent = {
+    enable = true,
+    disable = { "latex" }
+  },
 }
 
-
 -- Auto Indent
-vim.cmd [[autocmd BufWritePre *.ml lua vim.lsp.buf.format()]]
+vim.cmd [[autocmd BufWritePre *.ml,*.re lua vim.lsp.buf.format()]]
+vim.cmd [[autocmd BufNewFile,BufRead *.re set filetype=reason]]
 
 
 ---------- LSP ----------
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require'lspconfig'.lua_ls.setup {
+require 'lspconfig'.lua_ls.setup {
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -201,7 +193,7 @@ require'lspconfig'.lua_ls.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -217,7 +209,11 @@ require'lspconfig'.lua_ls.setup {
 }
 
 require 'lspconfig'.ocamllsp.setup {
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+    filetypes =
+    { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" }
+  }
 }
 require 'lspconfig'.clangd.setup {
   capabilities = capabilities
@@ -226,11 +222,16 @@ require 'lspconfig'.pyright.setup {
   capabilities = capabilities
 }
 ---------- Completion ----------
-local cmp = require'cmp'
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 cmp.setup({
   snippet = {
-    -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
     end,
@@ -240,6 +241,28 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      --elseif luasnip.expand_or_jumpable() then
+      --  luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -247,11 +270,12 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
-    { name = 'luasnip' }, -- For luasnip users.
-    { name = 'omni'},
+    { name = 'luasnip'}, -- For luasnip users. Doesn't work...
+    { name = 'omni' },
     { name = 'nvim_lsp' },
   }, {
-    { name = 'buffer' },
+    --{ name = 'buffer' },
   })
 })
-
+vim.cmd [[ let &inccommand = ""]]
+vim.g.gutentags_cache_dir = "~/.cache/ctags"
