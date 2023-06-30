@@ -64,6 +64,7 @@ local simple_table = {
   ["DD"] = "D",
   ["EE"] = "E",
   ["FF"] = "F",
+  ["PP"] = "P",
 
   ["sin"] = "sin",
   ["cos"] = "cos",
@@ -157,7 +158,7 @@ local other_math_snippets = {
     { condition = in_mathzone }),
 
   s({ trig = "int", snippetType = "autosnippet" },
-    fmta("\\int_{<>}^{<>} <> \\diff <> ", { i(1), i(2), i(4), i(3) }),
+    fmta("\\int_{<>}^{<>} ", { i(1), i(2) }),
     { condition = in_mathzone }),
 
   s({ trig = "sum", snippetType = "autosnippet" },

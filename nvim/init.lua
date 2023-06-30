@@ -3,12 +3,12 @@ local packer = require('packer')
 packer.startup(function(use)
   -- LaTeX
   use 'lervag/vimtex'
-  use { 'andymass/vim-matchup',
+  --[[use { 'andymass/vim-matchup',
     setup = function()
       vim.g.matchup_override_vimtex = 1
       vim.g.matchup_matchparen_deferred = 1
     end
-  }
+  }]]
 
   -- Syntax highlighting
   use 'nvim-treesitter/nvim-treesitter'
@@ -147,6 +147,7 @@ vim.g.vimtex_indent_enabled = 0
 vim.g.vimtex_syntax_enabled = 1
 vim.g.tex_indent_braces = 0
 vim.g.tex_flavor = "latex"
+vim.g.vimtex_matchparen_enable = 1
 
 
 ---------- LaTeX Snippets ----------

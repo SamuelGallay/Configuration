@@ -6,28 +6,17 @@ set $mod Mod4
 # Your preferred terminal emulator
 set $term foot 
 
-# Your preferred application launcher
-# set $menu dmenu_path | dmenu | xargs swaymsg exec --
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-set $menu exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
-
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 exec swaymsg create_output
 output eDP-1 bg ~/Images/raytracing.png fill
 output HEADLESS-1 bg #7a1dc2 solid_color
-output HEADLESS-1 disable
 output HDMI-1 bg #34c0eb solid_color
 
 output eDP-1 pos 0 0
-#output HEADLESS-1 pos 0 1080
 output HEADLESS-1 pos 1920 0
 output HDMI-1 pos 1920 0
 output DP-1 pos 1920 0
 exec_always xrandr --output XWAYLAND0 --primary
-
-#output eDP-1 pos 1920 0
-#output HEADLESS-1 pos 0 0
-#output HDMI-1 pos 3840 0
 
 input "1:1:AT_Translated_Set_2_keyboard" {
 #  xkb_layout "ch(fr)"
@@ -51,7 +40,9 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 
 # Start your launcher
-bindsym $mod+d exec $menu
+bindsym $mod+d exec ulauncher-toggle
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+bindsym $mod+Shift+d exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
 
 # Firefox 
 bindsym $mod+p exec LANG=fr firefox
@@ -85,7 +76,7 @@ bindsym $mod+Shift+s exec grim -g "$(slurp)" screenshot.png
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 
-bindsym $mod+g exec wl-mirror HEADLESS-1
+bindsym $mod+g exec wl-mirror $(swaymsg -rt get_workspaces | jq '.[] | select(.name == "EXTERNAL") | .output' | tr -d '"')
 bindsym $mod+Shift+g output HEADLESS-1 enable
 
 
@@ -223,9 +214,8 @@ workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
 workspace 9 output eDP-1
-workspace EXTERNAL output HDMI-1
-workspace EXTERNAL output DP-1
-workspace EXTERNAL output HEADLESS-1
+
+workspace EXTERNAL output HDMI-1 DP-1 HEADLESS-1 eDP-1
 
 # Status Bar:
 bar swaybar_command waybar
