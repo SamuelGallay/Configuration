@@ -1,0 +1,20 @@
+[Unit]
+Description=Screen locker for Wayland
+# If swaylock exits cleanly, unlock the session:
+OnSuccess=unlock.target
+# When lock.target is stopped, stops this too:
+PartOf=lock.target
+# Delay lock.target until this service is ready:
+After=lock.target
+
+[Service]
+# systemd will consider this service started when swaylock forks...
+Type=forking
+# ... and swaylock will fork only after it has locked the screen.
+ExecStart=/usr/bin/swaylock --ignore-empty-password --clock --indicator --screenshots --effect-scale 0.4 --effect-vignette 0.2:0.5 --effect-blur 4x2 --datestr "%%a %%e.%%m.%%Y" --timestr "%%k:%%M"
+# If swaylock crashes, always restart it immediately:
+Restart=on-failure
+RestartSec=0
+
+[Install]
+WantedBy=lock.target

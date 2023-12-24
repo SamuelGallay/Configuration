@@ -2,7 +2,7 @@
 x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop
 message/rfc822=userapp-Thunderbird-HNSTL1.desktop
 x-scheme-handler/mid=userapp-Thunderbird-HNSTL1.desktop
-x-scheme-handler/etcher=balena-etcher-electron.desktop
+x-scheme-handler/etcher=balena-etcher.desktop
 application/pdf=org.gnome.Evince.desktop
 image/png=org.gnome.eog.desktop
 x-scheme-handler/http=firefox.desktop
@@ -23,13 +23,17 @@ x-scheme-handler/discord-455712169795780630=discord-455712169795780630.desktop
 x-scheme-handler/msteams=teams.desktop
 image/svg+xml=org.gnome.eog.desktop
 image/webp=org.gnome.eog.desktop
+application/postscript=org.gnome.Evince.desktop
+application/x-desktop=emacs.desktop
+text/plain=emacs.desktop
+image/gif=org.gnome.eog.desktop
+application/x-musescore=org.musescore.MuseScore.desktop
 
 [Added Associations]
 x-scheme-handler/mailto=userapp-Thunderbird-HNSTL1.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-HNSTL1.desktop;
 audio/x-mpegurl=nvim.desktop;
-application/pdf=evince.desktop;org.gnome.Evince.desktop;
-text/plain=emacs.desktop;nvim.desktop;
+text/plain=nvim.desktop;emacs.desktop;
 application/zip=org.gnome.Nautilus.desktop;
 image/tiff=gimp.desktop;
 image/png=org.gnome.eog.desktop;gimp.desktop;
@@ -52,3 +56,7 @@ audio/midi=mscore.desktop;
 application/rtf=onlyoffice-desktopeditors.desktop;
 image/svg+xml=org.gnome.eog.desktop;
 image/webp=org.gnome.eog.desktop;
+application/postscript=org.gnome.Evince.desktop;
+application/x-desktop=emacs.desktop;
+image/gif=org.gnome.eog.desktop;
+application/x-musescore=org.musescore.MuseScore.desktop;

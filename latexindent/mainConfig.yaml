@@ -238,8 +238,8 @@ lookForAlignDelims:
 indentAfterItems:
     itemize: 0
     itemize*: 0
-    enumerate: 0
-    enumerate*: 0
+    enumerate: 1
+    enumerate*: 1
     description: 1
     description*: 1
     list: 1

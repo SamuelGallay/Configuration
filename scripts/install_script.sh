@@ -8,7 +8,7 @@ desktopPackages=("sway" "alacritty" "firefox" "pipewire" "pipewire-pulse" "pavuc
 
 mostPackages=("retroarch" "thunderbird" "deluge-gtk" "opam" "code" "imagemagick" "evince" "neofetch" "texlive-most" "biber" "steam" "discord" "dunst" "qt5-wayland" "xdg-desktop-portal" "vlc" "wine" "wine-mono" "wine-gecko" "lib32-libpulse" "sagemath" "sagemath-doc" "jupyter-notebook" "lua-language-server" "python-virtualenv" "fd" "python-pynvim" "zathura" "zathura-pdf-mupdf" "ttf-fira-code" "geogebra" "caprine" "rsync" "ctags" "openssh" "v4l2loopback-dkms" "xournalpp" "valgrind" "gdb" "handbrake" "llvm" "clang")
 
-mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet-git" "alacritty-themes" "whatsapp-for-linux" "nvim-packer-git" "dropbox" "wev" "wl-mirror")
+mostAURPackages=("sway-launcher-desktop" "spotify-adblock-git" "bitwarden" "oh-my-zsh-git" "greetd" "greetd-gtkgreet-git" "alacritty-themes" "whatsapp-for-linux" "nvim-packer-git" "dropbox" "wev" "wl-mirror" "systemd-lock-handler")
 
 concatenate() {
   local -n arr=$1

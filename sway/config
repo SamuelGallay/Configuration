@@ -8,6 +8,7 @@ set $term foot
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 exec swaymsg create_output
+output HEADLESS-1 disable
 output eDP-1 bg ~/Images/raytracing.png fill
 output HEADLESS-1 bg #7a1dc2 solid_color
 output HDMI-1 bg #34c0eb solid_color
@@ -21,7 +22,7 @@ exec_always xrandr --output XWAYLAND0 --primary
 input "1:1:AT_Translated_Set_2_keyboard" {
 #  xkb_layout "ch(fr)"
   xkb_layout ch_fr_modified
-  xkb_options caps:swapescape
+  #xkb_options caps:swapescape
 }
 
 input "1739:52861:SYNA32B3:01_06CB:CE7D_Touchpad" {
@@ -33,6 +34,7 @@ input "1267:11525:ELAN2514:00_04F3:2D05" {
   map_to_output "eDP-1"
 }
 
+
 # Start a terminal
 bindsym $mod+Return exec $term
 
@@ -40,33 +42,56 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 
 # Start your launcher
-bindsym $mod+d exec ulauncher-toggle
+bindsym $mod+d exec GTK_THEME=Arc-Dark ulauncher-toggle
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
 bindsym $mod+Shift+d exec $term -a launcher -e env TERMINAL_COMMAND='$term -e' sway-launcher-desktop
 
 # Firefox 
-bindsym $mod+p exec LANG=fr firefox
-bindsym $mod+Shift+p exec LANG=fr firefox -P private
+bindsym $mod+p workspace 󰈹; exec ~/.config/scripts/is_empty.sh 󰈹 && LANG=fr GTK_THEME=Arc-Dark firefox
+bindsym $mod+F1 workspace 󰈹; exec ~/.config/scripts/is_empty.sh 󰈹 && LANG=fr GTK_THEME=Arc-Dark firefox
+bindsym $mod+Shift+p move container to workspace 󰈹
+bindsym $mod+Mod1+p exec GTK_THEME=Arc-Dark LANG=fr firefox -P private
+
+bindsym $mod+x exec  GTK_THEME=Arc-Dark nautilus
 
 # NeoVim
 bindsym $mod+o exec $term -e nvim
 
-# Code
-bindsym $mod+i exec code
+bindsym $mod+i workspace 󰇮; exec ~/.config/scripts/is_empty.sh 󰇮 && GTK_THEME=Arc-Dark thunderbird
+bindsym $mod+Shift+i move container to workspace 󰇮
+
+bindsym $mod+egrave workspace 󰈎; exec ~/.config/scripts/is_empty.sh 󰈎 && caprine
+bindsym $mod+Shift+egrave move container to workspace 󰈎 
+
+bindsym $mod+dead_diaeresis workspace ; exec ~/.config/scripts/is_empty.sh  && GTK_THEME=Arc-Dark whatsapp-for-linux
+bindsym $mod+Shift+dead_diaeresis move container to workspace  
+
+bindsym $mod+dollar workspace 󰙯;  exec ~/.config/scripts/is_empty.sh 󰙯 && discord
+bindsym $mod+Shift+dollar container to workspace 󰙯 
 
 # Spotify 
-bindsym $mod+m exec env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U 
+bindsym $mod+m workspace ; exec ~/.config/scripts/is_empty.sh  && env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U
+bindsym $mod+Shift+m move container to workspace 
+
 
 # Bluetooth
-bindsym $mod+n exec blueman-manager
+bindsym $mod+n exec GTK_THEME=Arc-Dark blueman-manager
 
 # Volume (package pamixer)
-bindsym 0x1008ff11 exec pamixer -d 5
-bindsym 0x1008ff13 exec pamixer -i 5
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+bindsym XF86AudioMute exec pamixer -t
+bindsym XF86AudioMicMute exec 'pactl set-source-mute $(pactl get-default-source) toggle'
+
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPlay exec playerctl play-pause
+
+#bindsym $mod+Shift+Home exec /usr/bin/pactl set-sink-mute alsa_output.pci-0000_04_00.6.HiFi__hw_Generic_1__sink 1;
 
 # Brightness (package light)
-bindsym 0x1008ff03 exec light -U 5
-bindsym 0x1008ff02 exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86MonBrightnessUp exec light -A 5
 
 floating_modifier $mod normal
 
@@ -79,6 +104,9 @@ bindsym $mod+Shift+c reload
 bindsym $mod+g exec wl-mirror $(swaymsg -rt get_workspaces | jq '.[] | select(.name == "EXTERNAL") | .output' | tr -d '"')
 bindsym $mod+Shift+g output HEADLESS-1 enable
 
+bindsym $mod+Home exec 'bluetoothctl disconnect 94:DB:56:84:F7:76; bluetoothctl connect 94:DB:56:84:F7:76'
+
+bindsym $mod+Next exec 'sudo rmmod hid_multitouch && sudo modprobe hid_multitouch'
 
 bindsym $mod+Shift+e exec swaynag \
 -t warning \
@@ -87,6 +115,12 @@ bindsym $mod+Shift+e exec swaynag \
 -b 'Poweroff' 'systemctl poweroff' \
 -b 'Reboot' 'systemctl reboot'
 
+#bindsym $mod+End exec loginctl lock-session && swaymsg "output * dpms off" && /usr/bin/swayidle resume 'swaymsg "output * dpms on"' 
+
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+bindsym $mod+End exec "bash -c 'loginctl lock-session && sleep 0.5 && killall -USR1 swayidle'"
+bindsym $mod+Shift+End exec systemctl hibernate
 #
 # Moving around:
 #
@@ -120,27 +154,27 @@ bindsym $mod+Shift+e exec swaynag \
 # Workspaces:
 #
     # Switch to workspace
-   bindsym $mod+1 workspace number 1
-   bindsym $mod+2 workspace number 2
-   bindsym $mod+3 workspace number 3
-   bindsym $mod+4 workspace number 4
-   bindsym $mod+5 workspace number 5
-   bindsym $mod+6 workspace number 6
-   bindsym $mod+7 workspace number 7
-   bindsym $mod+8 workspace number 8
-   bindsym $mod+9 workspace number 9
+   bindsym $mod+1 workspace 1
+   bindsym $mod+2 workspace 2
+   bindsym $mod+3 workspace 3
+   bindsym $mod+4 workspace 4
+   bindsym $mod+5 workspace 5
+   bindsym $mod+6 workspace 6
+   bindsym $mod+7 workspace 7
+   bindsym $mod+8 workspace 8
+   bindsym $mod+9 workspace 9
    bindsym $mod+0 workspace EXTERNAL
     
 # Move focused container to workspace
-  bindsym $mod+Shift+1 move container to workspace number 1
-  bindsym $mod+Shift+2 move container to workspace number 2
-  bindsym $mod+Shift+3 move container to workspace number 3
-  bindsym $mod+Shift+4 move container to workspace number 4
-  bindsym $mod+Shift+5 move container to workspace number 5
-  bindsym $mod+Shift+6 move container to workspace number 6
-  bindsym $mod+Shift+7 move container to workspace number 7
-  bindsym $mod+Shift+8 move container to workspace number 8
-  bindsym $mod+Shift+9 move container to workspace number 9
+  bindsym $mod+Shift+1 move container to workspace 1
+  bindsym $mod+Shift+2 move container to workspace 2
+  bindsym $mod+Shift+3 move container to workspace 3
+  bindsym $mod+Shift+4 move container to workspace 4
+  bindsym $mod+Shift+5 move container to workspace 5
+  bindsym $mod+Shift+6 move container to workspace 6
+  bindsym $mod+Shift+7 move container to workspace 7
+  bindsym $mod+Shift+8 move container to workspace 8
+  bindsym $mod+Shift+9 move container to workspace 9
   bindsym $mod+Shift+0 move container to workspace EXTERNAL
 #
 # Layout stuff:
@@ -203,8 +237,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-
-
 workspace 1 output eDP-1
 workspace 2 output eDP-1
 workspace 3 output eDP-1
@@ -225,5 +257,13 @@ default_border none
 gaps inner 8
 
 exec udiskie -t
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec systemctl --user start ulauncher
+# exec systemctl --user start swayidle 
 
-include /etc/sway/config.d/*
+# Hack to fix menus :
+# env -u WAYLAND_DISPLAY mscore
+
+#include /etc/sway/config.d/*

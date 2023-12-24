@@ -100,7 +100,11 @@ local simple_table = {
   ["to"] = "to",
   ["mt"] = "mapsto",
   ["oo"] = "infty",
+  ["ti"] = "times",
+  ["pa"] = "partial",
   ["wt"] = "widetilde",
+  ["tt"] = "tilde",
+  ["mbb"] = "mathbb",
   ["11"] = "1",
   ["kn"] = ",|\\,",
   ["qd"] = "quad",
@@ -219,7 +223,7 @@ local environments_snippets = {
 
   s({ trig = "ssec", snippetType = "autosnippet" },
     fmta([[
-\section{<>}
+\subsection{<>}
 
 <>]], { i(1), i(0) }),
     { condition = line_begin }),
@@ -236,8 +240,16 @@ local environments_snippets = {
     fmta("{\\color{<>} <> } ", { i(1), i(0) }),
     {}),
 
+  s({ trig = "bff", snippetType = "autosnippet" },
+    fmta([[\textbf{<>} ]], { i(1) }),
+    {}),
+
   s({ trig = "cref", snippetType = "autosnippet" },
     fmta([[\cref{<>} ]], { i(1) }),
+    {}),
+
+  s({ trig = "rref", snippetType = "autosnippet" },
+    fmta([[(\ref{<>}) ]], { i(1) }),
     {}),
 }
 

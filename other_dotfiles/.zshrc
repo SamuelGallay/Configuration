@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+export PATH=~/.config/emacs/bin:$PATH
 # Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 
@@ -131,6 +131,20 @@ alias pluto="LD_LIBRARY_PATH=\"/usr/lib/julia:$LD_LIBRARY_PATH\" julia -e \"usin
 alias ls="exa"
 . /usr/share/z/z.sh
 
+# Something about switching venv
+python_venv() {
+  MYVENV=./.env
+  # when you cd into a folder that contains $MYVENV
+    [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1
+  # when you cd into a folder that doesn't
+  [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
+}
+autoload -U add-zsh-hook
+add-zsh-hook chpwd python_venv
+
+python_venv
+
+
 function osc7 {
     local LC_ALL=C
     export LC_ALL
@@ -141,5 +155,9 @@ function osc7 {
     print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
 }
 add-zsh-hook -Uz chpwd osc7
+
+
+
+export NEXTCLOUD_PHP_CONFIG=/etc/webapps/nextcloud/php.ini
 
 

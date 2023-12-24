@@ -25,6 +25,10 @@ sudo ln -i ~/.config/other_dotfiles/greetd/* /etc/greetd/
 echo "Bluetooth..."
 sudo ln -i ~/.config/other_dotfiles/bluetooth/main.conf /etc/bluetooth/main.conf 
 
+echo "Reconnect headphones after suspend"
+sudo ln -i ~/.config/scripts/reconnect-bluetooth.sh /lib/systemd/system-sleep/reconnect-bluetooth.sh
+
+
 echo "PAM greetd"
 sudo ln -i ~/.config/other_dotfiles/pam-greetd  /etc/pam.d/greetd
 

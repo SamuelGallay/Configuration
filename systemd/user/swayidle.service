@@ -1,0 +1,15 @@
+[Unit]
+Description=Idle manager for Wayland
+Documentation=man:swayidle(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swayidle -w \
+  timeout 300   'swaymsg "output * dpms off"' \
+       resume   'swaymsg "output * dpms on"'  \
+  timeout 360   'loginctl lock-session'       \
+#       resume   'swaymsg "output * dpms on"'  \
+#  timeout 900   'systemctl suspend'           \
+       resume   'swaymsg "output * dpms on"'
+
